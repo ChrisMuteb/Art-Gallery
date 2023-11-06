@@ -47,8 +47,8 @@ def categorize_frames(data):
             frame_portrait.append(painting)
         frame_id += 1
 
-    print("Landscape Frames:", frame_landscape)
-    print("Portrait Frames:", frame_portrait)
+    # print("Landscape Frames:", frame_landscape)
+    # print("Portrait Frames:", frame_portrait)
 
     return frame_landscape, frame_portrait
 
@@ -59,22 +59,39 @@ def local_robotic_satisfaction(frameglassA, frameglassB):
     diff_B = len(frameglassB) - len(inter_result)
     return min(len(inter_result), diff_A, diff_B)
 
+# sort painting based on the number of tags in an ascending order
+def sort_painting(paintings):
+    return sorted(paintings, key=lambda painting: painting._paint_tag_num)
 
 if __name__ == "__main__":
-    data = read_data('Data/0_example.txt')
+    data = read_data('Data/1_binary_landscapes.txt')
     landscape, portrait = categorize_frames(data)
+    landscape_lst = []
+    portrait_lst = []
 
     print("Landscape Frames:")
     for painting in landscape:
         print(painting)
+        landscape_lst.append(painting)
     
     print("Portrait Frames:")
     for painting in portrait:
-        print(painting)
+        # print(painting)
+        portrait_lst.append(painting)
 
     # test local_score_function
-    frameAs = {'war', 'fear', 'animals'}
-    frameBs = {'raft', 'survivors', 'fear'}
-    print(local_robotic_satisfaction(frameAs, frameBs))
+    # frameAs = portrait_lst[0]._paint_tag_lst
+    # frameBs = landscape_lst[0]._paint_tag_lst
+    # print(frameAs)
+    # print(frameBs)
+    # print(local_robotic_satisfaction(frameAs, frameBs))
+
+    # test sort painting based on their tag number
+    sorted_landscape = sort_painting(landscape_lst)
+    print(sorted_landscape[len(sorted_landscape)-1]._paint_tag_num)
+    for painting in sorted_landscape:
+        # print(painting)
+        
+        print(painting)
 
 
